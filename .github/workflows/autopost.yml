@@ -1,0 +1,16 @@
+name: Post automatique
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Poste à 8h UTC
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install -r requirements.txt
+      - run: python bot.py
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
